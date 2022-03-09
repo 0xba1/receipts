@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Light and dark theme of app
@@ -11,6 +12,13 @@ class ReceiptTheme {
       elevatedButtonTheme: _elevatedButtonThemeData,
       textButtonTheme: _textButtonThemeData,
       outlinedButtonTheme: _outlinedButtonThemeData,
+      appBarTheme: AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: _lightColorScheme.primary,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      ),
     );
   }
 
@@ -22,6 +30,16 @@ class ReceiptTheme {
       elevatedButtonTheme: _elevatedButtonThemeData,
       textButtonTheme: _textButtonThemeData,
       outlinedButtonTheme: _outlinedButtonThemeData,
+      appBarTheme: AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: _darkColorScheme.primary,
+
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+          statusBarBrightness: Brightness.dark,
+        ),
+      ),
     );
   }
 }
@@ -60,11 +78,13 @@ const TextTheme _textTheme = TextTheme(
 );
 
 final ColorScheme _lightColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color(0xFFC10000),
+  // seedColor: const Color(0xFFC10000),
+  seedColor: Colors.green,
 );
 
 final ColorScheme _darkColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color(0xFFC10000),
+  // seedColor: const Color(0xFFC10000),
+  seedColor: Colors.green,
   brightness: Brightness.dark,
 );
 

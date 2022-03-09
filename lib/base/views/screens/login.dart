@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:receipts/logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -30,30 +32,52 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final logInFormKey = GlobalKey<FormState>();
     return Scaffold(
-      body: Column(
-        children: [
-          Form(
-            key: logInFormKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: emailController,
-                ),
-                TextFormField(
-                  controller: passwordController,
-                ),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const Logo(),
+            Form(
+              key: logInFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextFormField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      hintText: AppLocalizations.of(context)!.email,
+                    ),
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 5,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      hintText: AppLocalizations.of(context)!.password,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Log In With Email'),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Log In With Google'),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: () {},
+              child: Text(AppLocalizations.of(context)!.logInWithEmail),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text(AppLocalizations.of(context)!.logInWithGoogle),
+            ),
+          ],
+        ),
       ),
     );
   }

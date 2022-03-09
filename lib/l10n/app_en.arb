@@ -1,0 +1,35 @@
+{
+    "@@locale": "en",
+    "title": "Receipts",
+    "@title": {
+        "description": "Title of app"
+    },
+    "appName": "Receipts",
+    "@appName": {
+        "description": "The name of the app."
+    },
+    "logInWithEmail": "Log In With Email",
+    "@logInWithEmail": {
+        "description": "This is meant to be the label of a button."
+    },
+    "logInWithGoogle": "Log In With Google",
+    "@logInWithGoogle": {
+        "description": "This is meant to be the label of a button."
+    },
+    "signUpWithEmail": "Sign Up With Email",
+    "@signUpWithEmail": {
+        "description": "This is meant to be the label of a button."
+    },
+    "signUpWithGoogle": "Sign Up With Google",
+    "@signUpWithGoogle": {
+        "description": "This is meant to be the label of a button."
+    },
+    "email": "Email",
+    "@email": {
+        "description": "This is meant to be the hint text of a text field"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "This is meant to be the hint text of a text field"
+    }
+}

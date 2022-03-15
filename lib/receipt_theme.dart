@@ -1,6 +1,10 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+/// [ColorScheme] seed color
+Color _seedColor = const Color(0xFFB4E6FF);
 
 /// Light and dark theme of app
 class ReceiptTheme {
@@ -79,21 +83,22 @@ const TextTheme _textTheme = TextTheme(
 
 final ColorScheme _lightColorScheme = ColorScheme.fromSeed(
   // seedColor: const Color(0xFFC10000),
-  seedColor: Colors.green,
+  seedColor: _seedColor,
 );
 
 final ColorScheme _darkColorScheme = ColorScheme.fromSeed(
   // seedColor: const Color(0xFFC10000),
-  seedColor: Colors.green,
+  seedColor: _seedColor,
   brightness: Brightness.dark,
 );
 
 final ElevatedButtonThemeData _elevatedButtonThemeData =
     ElevatedButtonThemeData(
   style: ButtonStyle(
+    maximumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
     shape: MaterialStateProperty.all(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(6),
       ),
     ),
     minimumSize: MaterialStateProperty.all(const Size(120, 40)),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/logo.dart';
 
 ///
@@ -33,12 +35,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signUpFormKey = GlobalKey<FormState>();
+    final authBloc = context.read<AuthBloc>();
     return Scaffold(
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            const SizedBox(
+              height: 100,
+            ),
             const Logo(),
+            const SizedBox(
+              height: 100,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8),
@@ -51,10 +60,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: emailController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
                               width: 5,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           hintText: AppLocalizations.of(context)!.email,
@@ -64,16 +73,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: passwordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
                               width: 5,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                           hintText: AppLocalizations.of(context)!.password,
                         ),
                       ),
+                      // Sign up with email and password
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          authBloc.add(
+                            AuthSignUpWithEmail(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            ),
+                          );
+                        },
                         child: Text(
                           AppLocalizations.of(context)!.signUpWithEmail,
                         ),
@@ -86,7 +104,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Expanded(
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    authBloc.add(AuthLogInWithGoogle());
+                  },
+                  style: ElevatedButtonTheme.of(context).style!.copyWith(
+                        backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.tertiary,
+                        ),
+                      ),
                   child: Text(AppLocalizations.of(context)!.signUpWithGoogle),
                 ),
               ),

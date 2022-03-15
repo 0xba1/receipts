@@ -8,9 +8,12 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  cloud_firestore: ^3.1.10
   equatable: ^2.0.3
   firebase_auth: ^3.3.9
   firebase_core: ^1.13.1
+  firebase_storage: ^10.2.9
+  flex_color_scheme: ^5.0.0-dev.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
@@ -18,6 +21,7 @@ dependencies:
     sdk: flutter
   go_router: ^3.0.3
   google_fonts: ^2.3.1
+  google_mobile_ads: ^1.1.0
   google_sign_in: ^5.2.4
   hydrated_bloc: ^8.0.0 
   intl: ^0.17.0

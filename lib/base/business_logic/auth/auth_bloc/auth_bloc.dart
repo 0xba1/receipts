@@ -21,8 +21,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ) {
     on<AuthUserChanged>(_onUserChanged);
     on<AuthLogOutRequested>(_onLogOutRequested);
-    _userSubscription = _authenticationRepository.user
-        .listen((user) => add(AuthUserChanged(user)));
+    on<AuthLogInWithGoogle>(_onLogInWithGoogle);
+    on<AuthLogInWithEmail>(_onLogInWithEmail);
+    on<AuthSignUpWithEmail>(_onSignUpWithEmail);
+
+    _userSubscription = _authenticationRepository.user.listen(
+      (user) => add(
+        AuthUserChanged(user),
+      ),
+    );
   }
 
   final AuthenticationRepository _authenticationRepository;
@@ -38,6 +45,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onLogOutRequested(AuthLogOutRequested event, Emitter<AuthState> emit) {
     unawaited(_authenticationRepository.logOut());
+  }
+
+  void _onLogInWithGoogle(AuthLogInWithGoogle event, Emitter<AuthState> emit) {
+    unawaited(_authenticationRepository.logInWithGoogle());
+  }
+
+  void _onLogInWithEmail(AuthLogInWithEmail event, Emitter<AuthState> emit) {
+    unawaited(
+      _authenticationRepository.logInWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      ),
+    );
+  }
+
+  void _onSignUpWithEmail(AuthSignUpWithEmail event, Emitter<AuthState> emit) {
+    unawaited(
+      _authenticationRepository.logInWithEmailAndPassword(
+        email: event.email,
+        password: event.password,
+      ),
+    );
   }
 
   @override

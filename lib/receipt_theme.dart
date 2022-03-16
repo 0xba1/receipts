@@ -46,6 +46,18 @@ class ReceiptTheme {
       ),
     );
   }
+
+  static ThemeData flexLight = FlexThemeData.light(
+    useMaterial3: true,
+    scheme: FlexScheme.flutterDash,
+    textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
+  );
+
+  static ThemeData flexDark = FlexThemeData.dark(
+    useMaterial3: true,
+    scheme: FlexScheme.flutterDash,
+    textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
+  );
 }
 
 const TextTheme _textTheme = TextTheme(
@@ -82,12 +94,10 @@ const TextTheme _textTheme = TextTheme(
 );
 
 final ColorScheme _lightColorScheme = ColorScheme.fromSeed(
-  // seedColor: const Color(0xFFC10000),
   seedColor: _seedColor,
 );
 
 final ColorScheme _darkColorScheme = ColorScheme.fromSeed(
-  // seedColor: const Color(0xFFC10000),
   seedColor: _seedColor,
   brightness: Brightness.dark,
 );

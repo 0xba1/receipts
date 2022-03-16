@@ -48,8 +48,8 @@ class ReceiptsApp extends StatelessWidget {
           AppLocalizations.of(context)!.title,
       routerDelegate: Routes.router(context).routerDelegate,
       routeInformationParser: Routes.router(context).routeInformationParser,
-      darkTheme: ReceiptTheme.dark,
-      theme: ReceiptTheme.light,
+      darkTheme: ReceiptTheme.flexDark,
+      theme: ReceiptTheme.flexLight,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
     );

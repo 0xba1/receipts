@@ -1,6 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// [ColorScheme] seed color
@@ -10,55 +9,56 @@ Color _seedColor = const Color(0xFFB4E6FF);
 class ReceiptTheme {
   /// Light Theme of app
   static ThemeData get light {
-    return ThemeData(
-      colorScheme: _lightColorScheme,
+    return FlexThemeData.light(
+      useMaterial3: true,
+      scheme: _flexScheme,
       textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
-      elevatedButtonTheme: _elevatedButtonThemeData,
-      textButtonTheme: _textButtonThemeData,
-      outlinedButtonTheme: _outlinedButtonThemeData,
-      appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: _lightColorScheme.primary,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
+      surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+      blendLevel: 20,
+      appBarOpacity: 0.95,
+      appBarElevation: 0.5,
+      tooltipsMatchBackground: true,
+      useSubThemes: true,
+      subThemesData: const FlexSubThemesData(
+        blendOnLevel: 20,
+        blendOnColors: false,
+        unselectedToggleIsColored: true,
+        popupMenuOpacity: 0.95,
+        bottomNavigationBarOpacity: 0.95,
+        navigationBarOpacity: 0.95,
+        navigationRailOpacity: 0.95,
       ),
+      visualDensity: FlexColorScheme.comfortablePlatformDensity,
     );
   }
 
   /// Dark Theme of app
   static ThemeData get dark {
-    return ThemeData(
-      colorScheme: _darkColorScheme,
+    return FlexThemeData.dark(
+      useMaterial3: true,
+      scheme: _flexScheme,
       textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
-      elevatedButtonTheme: _elevatedButtonThemeData,
-      textButtonTheme: _textButtonThemeData,
-      outlinedButtonTheme: _outlinedButtonThemeData,
-      appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          // Status bar color
-          statusBarColor: _darkColorScheme.primary,
-
-          // Status bar brightness (optional)
-          statusBarIconBrightness: Brightness.light, // For Android (dark icons)
-          statusBarBrightness: Brightness.dark,
-        ),
+      surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+      blendLevel: 20,
+      appBarStyle: FlexAppBarStyle.background,
+      appBarOpacity: 0.95,
+      appBarElevation: 0.5,
+      tooltipsMatchBackground: true,
+      useSubThemes: true,
+      subThemesData: const FlexSubThemesData(
+        blendOnLevel: 30,
+        unselectedToggleIsColored: true,
+        popupMenuOpacity: 0.95,
+        bottomNavigationBarOpacity: 0.95,
+        navigationBarOpacity: 0.95,
+        navigationRailOpacity: 0.95,
       ),
+      visualDensity: FlexColorScheme.comfortablePlatformDensity,
     );
   }
-
-  static ThemeData flexLight = FlexThemeData.light(
-    useMaterial3: true,
-    scheme: FlexScheme.flutterDash,
-    textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
-  );
-
-  static ThemeData flexDark = FlexThemeData.dark(
-    useMaterial3: true,
-    scheme: FlexScheme.flutterDash,
-    textTheme: GoogleFonts.poppinsTextTheme(_textTheme),
-  );
 }
+
+const _flexScheme = FlexScheme.flutterDash;
 
 const TextTheme _textTheme = TextTheme(
   bodyText1: TextStyle(

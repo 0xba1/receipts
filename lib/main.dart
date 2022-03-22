@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
 import 'package:receipts/firebase_options.dart';
@@ -15,6 +18,7 @@ Future<void> main() {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      unawaited(MobileAds.instance.initialize());
       final authenticationRepository = AuthenticationRepository();
       await authenticationRepository.user.first;
       runApp(
@@ -42,16 +46,25 @@ class ReceiptsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context)!.title,
-      routerDelegate: Routes.router(context).routerDelegate,
-      routeInformationParser: Routes.router(context).routeInformationParser,
-      darkTheme: ReceiptTheme.flexDark,
-      theme: ReceiptTheme.flexLight,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return GestureDetector(
+      onTap: () {
+        final currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context)!.title,
+        routerDelegate: Routes.router(context).routerDelegate,
+        routeInformationParser: Routes.router(context).routeInformationParser,
+        darkTheme: ReceiptTheme.dark,
+        theme: ReceiptTheme.light,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }

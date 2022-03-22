@@ -31,5 +31,13 @@
     "password": "Password",
     "@password": {
         "description": "This is meant to be the hint text of a text field"
+    },
+    "dontHaveAccount": "Don't have account? Create new account",
+    "@dontHaveAccount": {
+        "description": "This is meant to be the text of the button that takes the user to the signup page from the login screen if they don't have an account."
+    },
+    "haveAccount": "Have an account? Log In",
+    "@haveAccount": {
+        "description": "This is meant to be the text of the button that takes the user from the signup page to the login screen if they have an account."
     }
 }

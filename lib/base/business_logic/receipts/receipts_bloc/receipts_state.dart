@@ -1,10 +1,11 @@
 part of 'receipts_bloc.dart';
 
 @immutable
-abstract class ReceiptsState extends Equatable {}
+class ReceiptsState extends Equatable {
+  const ReceiptsState([this.receipts]);
 
-class ReceiptsInitial extends ReceiptsState {
+  final List<Receipt>? receipts;
+
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [receipts];
 }

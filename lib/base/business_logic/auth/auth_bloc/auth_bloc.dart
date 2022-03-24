@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUpWithEmail>(_onSignUpWithEmail);
 
     _userSubscription = _authenticationRepository.user.listen(
-      (user) => add(
+      (User user) => add(
         AuthUserChanged(user),
       ),
     );

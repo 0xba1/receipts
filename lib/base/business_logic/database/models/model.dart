@@ -8,6 +8,12 @@ class Receipt {
     required this.storePath,
   });
 
+  Receipt.fromMap(Map<String, dynamic> map)
+      : title = map['title'] as String,
+        description = map['description'] as String,
+        fileType = map['file_type'] as FileType,
+        storePath = map['store_path'] as String;
+
   /// Title of the receipt
   String title;
 

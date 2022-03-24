@@ -28,6 +28,7 @@ Future<void> main() {
             create: (context) => AuthBloc(
               authenticationRepository: authenticationRepository,
             ),
+            lazy: false,
             child: const ReceiptsApp(),
           ),
         ),

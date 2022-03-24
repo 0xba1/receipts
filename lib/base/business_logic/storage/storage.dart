@@ -18,11 +18,17 @@ abstract class Storage {
     required String userId,
     required String id,
   });
+
+  /// Deletes file from remote database
+  Future<void> deleteFile({
+    required String userId,
+    required String id,
+  });
 }
 
 class FireStorage extends Storage {
   final FirebaseStorage _instance = FirebaseStorage.instance;
-  final _uuid = Uuid();
+  final _uuid = const Uuid();
 
   @override
   Future<String?> uploadFile({
@@ -38,6 +44,7 @@ class FireStorage extends Storage {
     } on FirebaseException catch (err) {
       debugPrint('Failed to upload file: $err');
     }
+    return null;
   }
 
   @override
@@ -54,6 +61,19 @@ class FireStorage extends Storage {
       return path;
     } on FirebaseException catch (err) {
       debugPrint('Failed to download file: $err');
+    }
+    return null;
+  }
+
+  @override
+  Future<void> deleteFile({
+    required String userId,
+    required String id,
+  }) async {
+    try {
+      await _instance.ref('$userId/$id').delete();
+    } on FirebaseException catch (err) {
+      debugPrint('Failed to delete file: $err');
     }
   }
 }

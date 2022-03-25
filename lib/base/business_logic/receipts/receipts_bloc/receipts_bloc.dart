@@ -5,9 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
 import 'package:receipts/base/business_logic/auth/models/model.dart';
-import 'package:receipts/base/business_logic/receipts/receipt.dart';
-import 'package:receipts/base/business_logic/receipts/receipt_file.dart';
-import 'package:receipts/base/business_logic/receipts/receipt_file_source.dart';
+import 'package:receipts/base/business_logic/database/database.dart';
+import 'package:receipts/base/business_logic/database/models/model.dart';
 
 part 'receipts_event.dart';
 part 'receipts_state.dart';
@@ -23,35 +22,61 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     on<ReceiptsUserChanged>(_onUserChanged);
     on<ReceiptsChanged>(_onReceiptsChanged);
 
+    _fireDatabase = FireDatabase();
     _userSubscription = authenticationRepository.user.listen(
       (User user) => add(
         ReceiptsUserChanged(userId: user.id),
       ),
     );
   }
-
+  late final FireDatabase _fireDatabase;
   StreamSubscription? _userSubscription;
   StreamSubscription? _receiptSubscription;
 
   void _onUserChanged(ReceiptsUserChanged event, Emitter emit) {
     _receiptSubscription?.cancel();
-    // TODO: Subscribe to receipts (add(ReceiptsChanged(receipts)))
+    _receiptSubscription = _fireDatabase.stream(event.userId).listen(
+          (receipts) => add(
+            ReceiptsChanged(receipts: receipts),
+          ),
+        );
   }
 
+  // emits new state
   void _onReceiptsChanged(ReceiptsChanged event, Emitter emit) {
     emit(ReceiptsState(event.receipts));
   }
 
   void _onReceiptsCreate(ReceiptsCreate event, Emitter emit) {
-    // TODO: add receipt to receipts
+    unawaited(
+      _fireDatabase.createReceipt(
+        userId: event.userId,
+        title: event.title,
+        description: event.description,
+        localFilePath: event.localFilePath,
+      ),
+    );
   }
 
   void _onReceiptsUpdate(ReceiptsUpdate event, Emitter emit) {
-    // TODO: update receipt
+    unawaited(
+      _fireDatabase.updateReceipt(
+        userId: event.userId,
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        localFilePath: event.localFilePath,
+      ),
+    );
   }
 
   void _onReceiptsDelete(ReceiptsDelete event, Emitter emit) {
-    // TODO: update receipt
+    unawaited(
+      _fireDatabase.deleteReceipt(
+        userId: event.userId,
+        id: event.id,
+      ),
+    );
   }
 
   @override

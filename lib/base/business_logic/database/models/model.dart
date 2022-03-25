@@ -1,6 +1,6 @@
-/// Model for the receipt
+/// Model for receipt
 class Receipt {
-  /// Constructor
+  /// Constructor for [Receipt]
   Receipt({
     required this.title,
     required this.description,
@@ -8,10 +8,11 @@ class Receipt {
     required this.storePath,
   });
 
+  /// Creates a [Receipt] from [Map<String, dynamic>]
   Receipt.fromMap(Map<String, dynamic> map)
       : title = map['title'] as String,
         description = map['description'] as String,
-        fileType = map['file_type'] as FileType,
+        fileType = FileTypeHelper.fromStr(map['file-type'] as String),
         storePath = map['store_path'] as String;
 
   /// Title of the receipt
@@ -30,11 +31,48 @@ class Receipt {
 /// Enum indicating file type
 enum FileType {
   /// Image file type
-  image,
+  jpg,
+
+  /// Image file type
+  png,
 
   /// Pdf file type
   pdf,
 
   /// No file
   none,
+}
+
+///
+extension Str on FileType {
+  ///
+  String toStr() {
+    switch (this) {
+      case FileType.jpg:
+        return 'jpg';
+      case FileType.png:
+        return 'png';
+      case FileType.pdf:
+        return 'pdf';
+      case FileType.none:
+        return 'none';
+    }
+  }
+}
+
+/// Factory for FileType
+class FileTypeHelper {
+  ///
+  static FileType fromStr(String str) {
+    switch (str) {
+      case 'jpg':
+        return FileType.jpg;
+      case 'png':
+        return FileType.png;
+      case 'pdf':
+        return FileType.pdf;
+      default:
+        return FileType.none;
+    }
+  }
 }

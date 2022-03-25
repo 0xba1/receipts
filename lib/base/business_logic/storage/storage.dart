@@ -26,6 +26,7 @@ abstract class Storage {
   });
 }
 
+/// Firebase Storage
 class FireStorage extends Storage {
   final FirebaseStorage _instance = FirebaseStorage.instance;
   final _uuid = const Uuid();

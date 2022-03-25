@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// {@template new_receipt}
 /// Create new receipt
@@ -75,8 +76,9 @@ class _NewReceiptState extends State<NewReceipt> {
                     ),
                     OutlinedButton(
                       onPressed: () async {
-                        final pickedFilePath = await _pickFilePath();
-                        if (pickedFilePath == null) return;
+                        // final pickedFilePath = await _pickFilePath();
+                        // if (pickedFilePath == null) return;
+                        await _getFileFromModal(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,4 +124,71 @@ Future<String?> _pickFilePath() async {
   );
 
   return result?.files.single.path;
+}
+
+Future<String?> _takePicture() async {
+  final _picker = ImagePicker();
+  final pic = await _picker.pickImage(source: ImageSource.camera);
+  return pic?.path;
+}
+
+Future<String?> _getFileFromModal(BuildContext context) async {
+  final width = MediaQuery.of(context).size.width;
+  String? pathOfChosenFile;
+  await showModalBottomSheet<void>(
+    context: context,
+    builder: (BuildContext ctx) {
+      return SizedBox(
+        height: 176,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 32,
+            ),
+            ElevatedButton.icon(
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(
+                  Size(width - 16, 48),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              onPressed: () async {
+                pathOfChosenFile = await _takePicture();
+                // ignore: use_build_context_synchronously
+                Navigator.pop(ctx);
+              },
+              label: const Text('Take Picture from camera'),
+              icon: const Icon(Icons.camera_rounded),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton.icon(
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(
+                  Size(width - 16, 48),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              onPressed: () async {
+                pathOfChosenFile = await _pickFilePath();
+                // ignore: use_build_context_synchronously
+                Navigator.pop(ctx);
+              },
+              label: const Text('Choose file from device'),
+              icon: const Icon(Icons.file_open_rounded),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+          ],
+        ),
+      );
+    },
+  );
+  return pathOfChosenFile;
 }

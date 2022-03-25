@@ -1,7 +1,10 @@
 part of 'auth_bloc.dart';
 
+/// Authentication status
 enum AuthStatus {
+  /// User is authenticated
   authenticated,
+  /// User is not authenticated
   unauthenticated,
 }
 

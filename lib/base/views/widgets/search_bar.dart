@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template search_bar}
@@ -40,7 +41,9 @@ class SearchBar extends StatelessWidget {
                   ),
                 ),
               ),
-              const Text('Search receipts')
+              Text(
+                AppLocalizations.of(context)!.search,
+              )
             ],
           ),
         ),

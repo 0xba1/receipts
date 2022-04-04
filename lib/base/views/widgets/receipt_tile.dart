@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:receipts/base/business_logic/database/models/model.dart';
+import 'package:go_router/go_router.dart';
 
 /// {@template receipt_tile}
 /// An inkwell on the home screen that leads to [ReceiptDetails]
 /// {@endtemplate}
 class ReceiptTile extends StatelessWidget {
   /// {@macro receipt_tile}
-  const ReceiptTile({Key? key, required this.uuid, required this.title})
-      : super(key: key);
+  const ReceiptTile({Key? key, required this.receipt}) : super(key: key);
 
   // ignore: public_member_api_docs
-  final String uuid;
-  // ignore: public_member_api_docs
-  final String title;
+  final Receipt receipt;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,10 @@ class ReceiptTile extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
-        onTap: () {},
-        child: Text(title),
+        onTap: () {
+          context.push('e', extra: receipt);
+        },
+        child: Text(receipt.title),
       ),
     );
   }

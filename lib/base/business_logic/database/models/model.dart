@@ -6,6 +6,8 @@ class Receipt {
     required this.description,
     required this.fileType,
     required this.storePath,
+    required this.id,
+    required this.userId,
   });
 
   /// Creates a [Receipt] from [Map<String, dynamic>]
@@ -13,7 +15,9 @@ class Receipt {
       : title = map['title'] as String,
         description = map['description'] as String,
         fileType = FileTypeHelper.fromStr(map['file-type'] as String),
-        storePath = map['store_path'] as String;
+        storePath = map['store_path'] as String,
+        id = map['id'] as String,
+        userId = map['user_id'] as String;
 
   /// Title of the receipt
   String title;
@@ -24,8 +28,14 @@ class Receipt {
   /// [FileType] of the receipt
   FileType fileType;
 
-  /// Firebase Storage path
+  /// Storage path
   String storePath;
+
+  /// [Receipt] id
+  String id;
+
+  /// [Receipt] `User` id
+  String userId;
 }
 
 /// Enum indicating file type

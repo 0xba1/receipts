@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -29,14 +30,9 @@ class SearchScreen extends StatelessWidget {
                   enabledBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
-                  hintText: 'Search receipts',
-                  prefixIcon: IconButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_rounded,
-                    ),
+                  hintText: AppLocalizations.of(context)!.search,
+                  prefixIcon: BackButton(
+                    onPressed: () => context.pop(),
                   ),
                 ),
               ),

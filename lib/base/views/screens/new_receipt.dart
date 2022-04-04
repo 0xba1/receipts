@@ -1,7 +1,13 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:receipts/base/business_logic/auth/auth_repo.dart';
+import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
+import 'package:receipts/keys.dart';
+import 'package:receipts/validator.dart';
 
 /// {@template new_receipt}
 /// Create new receipt
@@ -34,16 +40,18 @@ class _NewReceiptState extends State<NewReceipt> {
 
   @override
   Widget build(BuildContext context) {
+    final receiptsBloc = context.read<ReceiptsBloc>();
+    final userId = context.read<AuthenticationRepository>().currentUser.id;
+    String? localFilePath;
     final width = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
+          leading: BackButton(
             onPressed: () => context.pop(),
-            icon: const Icon(Icons.arrow_back_rounded),
           ),
-          title: const Text('Create New Receipt'),
+          title: Text(AppLocalizations.of(context)!.createNewReceipt),
         ),
         body: Column(
           children: [
@@ -53,22 +61,34 @@ class _NewReceiptState extends State<NewReceipt> {
                 child: Column(
                   children: [
                     TextFormField(
+                      validator: (value) {
+                        if (Validator.isStringValid(value)) {
+                          return null;
+                        }
+                        return AppLocalizations.of(context)!.enterValidText;
+                      },
                       controller: titleController,
-                      decoration: const InputDecoration(
-                        labelText: 'Title',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.titleR,
                       ),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
+                      validator: (value) {
+                        if (Validator.isStringValid(value)) {
+                          return null;
+                        }
+                        return AppLocalizations.of(context)!.enterValidText;
+                      },
                       controller: descriptionController,
                       keyboardType: TextInputType.multiline,
                       maxLines: 6,
                       minLines: 6,
                       textAlignVertical: TextAlignVertical.top,
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.descriptionR,
                       ),
                     ),
                     const SizedBox(
@@ -78,7 +98,7 @@ class _NewReceiptState extends State<NewReceipt> {
                       onPressed: () async {
                         // final pickedFilePath = await _pickFilePath();
                         // if (pickedFilePath == null) return;
-                        await _getFileFromModal(context);
+                        localFilePath = await _getFileFromModal(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,13 +114,25 @@ class _NewReceiptState extends State<NewReceipt> {
                       height: 32,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (Keys.receiptFormKey.currentState!.validate() &&
+                            localFilePath != null) {
+                          receiptsBloc.add(
+                            ReceiptsCreate(
+                              userId: userId,
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              localFilePath: localFilePath!,
+                            ),
+                          );
+                        }
+                      },
                       style: ButtonStyle(
                         fixedSize: MaterialStateProperty.all(
                           Size(width - 16, 48),
                         ),
                       ),
-                      child: const Text('Create Receipt'),
+                      child: Text(AppLocalizations.of(context)!.createReceipt),
                     ),
                   ],
                 ),
@@ -159,7 +191,7 @@ Future<String?> _getFileFromModal(BuildContext context) async {
                 // ignore: use_build_context_synchronously
                 Navigator.pop(ctx);
               },
-              label: const Text('Take Picture from camera'),
+              label: Text(AppLocalizations.of(context)!.takePicture),
               icon: const Icon(Icons.camera_rounded),
             ),
             const SizedBox(
@@ -179,7 +211,7 @@ Future<String?> _getFileFromModal(BuildContext context) async {
                 // ignore: use_build_context_synchronously
                 Navigator.pop(ctx);
               },
-              label: const Text('Choose file from device'),
+              label: Text(AppLocalizations.of(context)!.fileFromDevice),
               icon: const Icon(Icons.file_open_rounded),
             ),
             const SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:receipts/base/views/widgets/search_bar.dart';
 
@@ -14,32 +15,12 @@ class Home extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          children: [
-            const SearchBar(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 200,
-                ),
-                Icon(
-                  Icons.lightbulb,
-                  size: 128,
-                  color: IconTheme.of(context).color?.withOpacity(0.2),
-                ),
-                const Text('Oh. So. Empty'),
-                TextButton(
-                  onPressed: () {
-                    context.pushNamed('new_receipt');
-                  },
-                  child: const Text('Create new receipt'),
-                ),
-              ],
-            )
+          children: const [
+            SearchBar(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          tooltip: 'Create new receipt',
+          tooltip: AppLocalizations.of(context)!.createNewReceipt,
           onPressed: () {
             context.pushNamed('new_receipt');
           },

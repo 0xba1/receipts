@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/keys.dart';
 import 'package:receipts/logo.dart';
+import 'package:receipts/validator.dart';
 
 /// {@template login}
 /// Login Screen
@@ -62,6 +62,12 @@ class _LogInScreenState extends State<LogInScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextFormField(
+                      validator: (value) {
+                        if (!Validator.isEmailValid(value)) {
+                          return AppLocalizations.of(context)!.enterValidEmail;
+                        }
+                        return null;
+                      },
                       controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -107,22 +113,26 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
             const SizedBox(height: 32),
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
                 onPressed: () {
-                  authBloc.add(
-                    AuthLogInWithEmail(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    ),
-                  );
+                  if (Keys.logInFormKey.currentState!.validate()) {
+                    authBloc.add(
+                      AuthLogInWithEmail(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      ),
+                    );
+                  }
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all(
-                    Size(width - 16, 48),
+                    Size(width - 32, 48),
                   ),
                 ),
-                child: Text(AppLocalizations.of(context)!.logInWithEmail),
+                child: Text(
+                  AppLocalizations.of(context)!.logInWithEmail,
+                ),
               ),
             ),
             const SizedBox(height: 64),
@@ -132,7 +142,7 @@ class _LogInScreenState extends State<LogInScreen> {
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all<Size>(
-                  Size(width - 16, 48),
+                  Size(width - 32, 48),
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
                   Theme.of(context).colorScheme.secondary,
@@ -145,10 +155,9 @@ class _LogInScreenState extends State<LogInScreen> {
               onPressed: () {
                 context.goNamed('signup');
               },
-              // child: Text(AppLocalizations.of(context)!.dontHaveAccount),
-              child: const Text(
-                "Don't have account? Create new account",
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.dontHaveAccount,
+                style: const TextStyle(
                   decoration: TextDecoration.underline,
                 ),
               ),

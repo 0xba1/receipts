@@ -26,11 +26,19 @@
     },
     "email": "Email",
     "@email": {
-        "description": "This is meant to be the hint text of a text field"
+        "description": "This is meant to be the label text of a text field"
     },
     "password": "Password",
     "@password": {
-        "description": "This is meant to be the hint text of a text field"
+        "description": "This is meant to be the label text of a text field"
+    },
+    "titleR": "Title",
+    "@titleR": {
+        "description": "Title"
+    },
+    "descriptionR": "Description",
+    "@descriptionR": {
+        "description": "Description"
     },
     "dontHaveAccount": "Don't have account? Create new account",
     "@dontHaveAccount": {
@@ -39,5 +47,37 @@
     "haveAccount": "Have an account? Log In",
     "@haveAccount": {
         "description": "This is meant to be the text of the button that takes the user from the signup page to the login screen if they have an account."
+    },
+    "enterValidEmail": "Please enter a valid email address",
+    "@enterValidEmail": {
+        "description": "Email validation: Email invalid."
+    },
+    "enterValidText": "Please enter a valid text",
+    "@enterValidText": {
+        "description": "Form validation: String invalid."
+    },
+    "createNewReceipt": "Create new receipt",
+    "@createNewReceipt": {
+        "description": "Create New Receipt."
+    },
+    "createReceipt": "Create Receipt",
+    "@createReceipt": {
+        "description": "Create Receipt."
+    },
+    "fileFromDevice": "Choose file from device",
+    "@fileFromDevice": {
+        "description": "Label of button: Choose file from device."
+    },
+    "takePicture": "Take Picture from camera",
+    "@takePicture": {
+        "description": "Label of button: Take Picture from camera."
+    },
+    "search": "Search receipts",
+    "@search": {
+        "description": "Search receipts"
+    },
+    "ohSoEmpty": "Oh. So. Empty",
+    "@ohSoEmpty": {
+        "description": "Oh. So. Empty"
     }
 }

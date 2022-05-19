@@ -10,20 +10,15 @@ class Validator {
 
     const pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,7}$';
     final regExp = RegExp(pattern);
+    
+    return regExp.hasMatch(string);
 
-    if (regExp.hasMatch(string)) {
-      return true;
-    }
-    return false;
   }
 
   /// Check if a String is null or empty.
   /// Returns true if not.
   static bool isStringValid(String? string) {
     // Null or empty string is invalid
-    if (string == null || string.isEmpty) {
-      return false;
-    }
-    return true;
+    return !(string == null || string.isEmpty);
   }
 }

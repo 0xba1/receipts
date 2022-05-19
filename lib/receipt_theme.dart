@@ -18,7 +18,6 @@ class ReceiptTheme {
       appBarOpacity: 0.95,
       appBarElevation: 0.5,
       tooltipsMatchBackground: true,
-      useSubThemes: true,
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 20,
         blendOnColors: false,
@@ -44,7 +43,6 @@ class ReceiptTheme {
       appBarOpacity: 0.95,
       appBarElevation: 0.5,
       tooltipsMatchBackground: true,
-      useSubThemes: true,
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 30,
         unselectedToggleIsColored: true,

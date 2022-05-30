@@ -28,6 +28,13 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
         ReceiptsUserChanged(userId: user.id),
       ),
     );
+    _receiptSubscription = _fireDatabase
+        .stream(authenticationRepository.currentUser.id)
+        .listen((List<Receipt> receipts) {
+      add(
+        ReceiptsChanged(receipts: receipts),
+      );
+    });
   }
   late final FireDatabase _fireDatabase;
   StreamSubscription? _userSubscription;

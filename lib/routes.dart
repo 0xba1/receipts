@@ -17,23 +17,23 @@ class Routes {
     final authBloc = context.read<AuthBloc>();
     return GoRouter(
       refreshListenable: GoRouterRefreshStream(authBloc.stream),
-      // redirect: (GoRouterState state) {
-      //   // Whether user is logged in
-      //   final isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
-      //   // Whether user is navigating to log in screen
-      //   final isGoingToLogInScreen = state.location == '/login';
-      //   // Whether user is navigating to sign up screen
-      //   final isGoingToSignUpScreen = state.location == '/signup';
+      redirect: (GoRouterState state) {
+        // Whether user is logged in
+        final isLoggedIn = authBloc.state.status == AuthStatus.authenticated;
+        // Whether user is navigating to log in screen
+        final isGoingToLogInScreen = state.location == '/login';
+        // Whether user is navigating to sign up screen
+        final isGoingToSignUpScreen = state.location == '/signup';
 
-      //   if (!isLoggedIn && !(isGoingToSignUpScreen || isGoingToLogInScreen)) {
-      //     return '/login';
-      //   } else if (isLoggedIn &&
-      //       (isGoingToSignUpScreen || isGoingToLogInScreen)) {
-      //     return '/';
-      //   } else {
-      //     return null;
-      //   }
-      // },
+        if (!isLoggedIn && !(isGoingToSignUpScreen || isGoingToLogInScreen)) {
+          return '/login';
+        } else if (isLoggedIn &&
+            (isGoingToSignUpScreen || isGoingToLogInScreen)) {
+          return '/';
+        } else {
+          return null;
+        }
+      },
       routes: [
         GoRoute(
           path: '/',

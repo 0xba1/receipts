@@ -8,7 +8,7 @@ class ReceiptsState extends Equatable {
   /// {@macro receipts_state}
   const ReceiptsState([this.receipts]);
 
-  ///
+  /// Receipts from database, null if loading
   final List<Receipt>? receipts;
 
   @override

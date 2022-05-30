@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:receipts/base/business_logic/auth/auth_repo.dart';
+import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/keys.dart';
 import 'package:receipts/validator.dart';
@@ -41,7 +41,7 @@ class _NewReceiptState extends State<NewReceipt> {
   @override
   Widget build(BuildContext context) {
     final receiptsBloc = context.read<ReceiptsBloc>();
-    final userId = context.read<AuthenticationRepository>().currentUser.id;
+    final userId = context.read<AuthBloc>().currentUserId;
     String? localFilePath;
     final width = MediaQuery.of(context).size.width;
 

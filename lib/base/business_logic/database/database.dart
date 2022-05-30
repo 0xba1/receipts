@@ -101,6 +101,8 @@ class FireDatabase extends Database {
 
   @override
   Stream<List<Receipt>> stream(String userId) {
+    if (userId == '') return Stream.value([]);
+
     return FirebaseFirestore.instance.collection(userId).snapshots().asyncMap(
           (event) =>
               event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {

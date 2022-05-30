@@ -9,9 +9,11 @@ import 'package:receipts/base/business_logic/auth/models/model.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-///
+/// {@template auth_bloc}
+/// Auth State management
+/// {@end_template}
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  ///
+  /// {@macro end_template}
   AuthBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(
@@ -34,6 +36,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
+
+  /// ID of currently signed in user
+  String get currentUserId => _authenticationRepository.currentUser.id;
 
   void _onUserChanged(AuthUserChanged event, Emitter<AuthState> emit) {
     emit(

@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:receipts/ads/ads_controller.dart';
+import 'package:receipts/ads/ads_cubit.dart';
 import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
+import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/firebase_options.dart';
 import 'package:receipts/receipt_theme.dart';
 import 'package:receipts/routes.dart';
@@ -18,19 +21,31 @@ Future<void> main() {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      unawaited(MobileAds.instance.initialize());
       final authenticationRepository = AuthenticationRepository();
       await authenticationRepository.user.first;
+
+      final adsController = AdsController(MobileAds.instance);
+      unawaited(adsController.initialize());
+
       runApp(
-        RepositoryProvider.value(
-          value: authenticationRepository,
-          child: BlocProvider(
-            create: (context) => AuthBloc(
-              authenticationRepository: authenticationRepository,
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthBloc(
+                authenticationRepository: authenticationRepository,
+              ),
+              lazy: false,
             ),
-            lazy: false,
-            child: const ReceiptsApp(),
-          ),
+            BlocProvider(
+              create: (_) => ReceiptsBloc(
+                authenticationRepository: authenticationRepository,
+              ),
+            ),
+            BlocProvider(
+              create: (_) => AdsCubit(adsController),
+            ),
+          ],
+          child: const ReceiptsApp(),
         ),
       );
     },
@@ -38,11 +53,11 @@ Future<void> main() {
   );
 }
 
-/// ----------------------------------------------------------------------------
+/// {@template app}
 /// Material App
-/// ----------------------------------------------------------------------------
+/// {@end_template app}
 class ReceiptsApp extends StatelessWidget {
-  ///
+  /// {@macro app}
   const ReceiptsApp({Key? key}) : super(key: key);
 
   @override

@@ -59,32 +59,32 @@ class ReceiptTheme {
 const _flexScheme = FlexScheme.flutterDash;
 
 const TextTheme _textTheme = TextTheme(
-  bodyText1: TextStyle(
+  bodyLarge: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
   ),
-  bodyText2: TextStyle(
+  bodyMedium: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
   ),
-  headline1: TextStyle(
+  headlineLarge: TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
   ),
-  headline2: TextStyle(
+  headlineMedium: TextStyle(
     fontSize: 21,
     fontWeight: FontWeight.w700,
   ),
-  headline3: TextStyle(
+  headlineSmall: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
   ),
-  subtitle1: TextStyle(
+  titleMedium: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w500,
     overflow: TextOverflow.ellipsis,
   ),
-  subtitle2: TextStyle(
+  titleSmall: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w300,
     overflow: TextOverflow.ellipsis,

@@ -14,15 +14,17 @@ part 'receipts_state.dart';
 ///
 class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
   ///
-  ReceiptsBloc({required AuthenticationRepository authenticationRepository})
-      : super(const ReceiptsState()) {
+  ReceiptsBloc({
+    required AuthenticationRepository authenticationRepository,
+    required FireDatabase database,
+  }) : super(const ReceiptsState()) {
     on<ReceiptsCreate>(_onReceiptsCreate);
     on<ReceiptsUpdate>(_onReceiptsUpdate);
     on<ReceiptsDelete>(_onReceiptsDelete);
     on<ReceiptsUserChanged>(_onUserChanged);
     on<ReceiptsChanged>(_onReceiptsChanged);
 
-    _fireDatabase = FireDatabase();
+    _fireDatabase = database;
     _userSubscription = authenticationRepository.user.listen(
       (User user) => add(
         ReceiptsUserChanged(userId: user.id),
@@ -42,11 +44,13 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
 
   void _onUserChanged(ReceiptsUserChanged event, Emitter emit) {
     _receiptSubscription?.cancel();
-    _receiptSubscription = _fireDatabase.stream(event.userId).listen(
-          (receipts) => add(
-            ReceiptsChanged(receipts: receipts),
-          ),
-        );
+    if (event.userId != '') {
+      _receiptSubscription = _fireDatabase.stream(event.userId).listen(
+            (receipts) => add(
+              ReceiptsChanged(receipts: receipts),
+            ),
+          );
+    }
   }
 
   // emits new state

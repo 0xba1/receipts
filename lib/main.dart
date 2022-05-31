@@ -9,12 +9,13 @@ import 'package:receipts/ads/ads_controller.dart';
 import 'package:receipts/ads/ads_cubit.dart';
 import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
+import 'package:receipts/base/business_logic/database/database.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/firebase_options.dart';
 import 'package:receipts/receipt_theme.dart';
 import 'package:receipts/routes.dart';
 
-Future<void> main() {
+void main() {
   return BlocOverrides.runZoned(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ Future<void> main() {
 
       final adsController = AdsController(MobileAds.instance);
       unawaited(adsController.initialize());
+      final database = FireDatabase();
 
       runApp(
         MultiBlocProvider(
@@ -39,6 +41,7 @@ Future<void> main() {
             BlocProvider(
               create: (_) => ReceiptsBloc(
                 authenticationRepository: authenticationRepository,
+                database: database,
               ),
             ),
             BlocProvider(

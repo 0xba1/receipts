@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+/// {@template search_screen}
+/// Screen to search firebase database
+/// {@end_template}
 class SearchScreen extends StatelessWidget {
+  /// {@macro search_screen}
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
@@ -31,6 +35,7 @@ class SearchScreen extends StatelessWidget {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                   hintText: AppLocalizations.of(context)!.search,
+                  hintStyle: Theme.of(context).textTheme.bodyMedium,
                   prefixIcon: BackButton(
                     onPressed: () => context.pop(),
                   ),

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:receipts/base/business_logic/database/models/model.dart';
 
 /// {@template receipt_tile}
-/// An inkwell on the home screen that leads to [ReceiptDetails]
+/// An inkwell on the home screen that leads to `ReceiptDetails`
 /// {@endtemplate}
 class ReceiptTile extends StatelessWidget {
   /// {@macro receipt_tile}

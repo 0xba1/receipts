@@ -4,50 +4,41 @@ part of 'receipts_bloc.dart';
 @immutable
 abstract class ReceiptsEvent extends Equatable {}
 
-///
-class ReceiptsCreate extends ReceiptsEvent {
-  ///
-  ReceiptsCreate({
-    required this.userId,
-    required this.title,
-    required this.description,
-    required this.localFilePath,
-  });
+// ///
+// class ReceiptsCreate extends ReceiptsEvent {
+//   ///
+//   ReceiptsCreate({
+//     required this.title,
+//     required this.description,
+//     required this.localFilePath,
+//   });
 
-  ///
-  final String userId;
+//   ///
+//   final String title;
 
-  ///
-  final String title;
+//   ///
+//   final String description;
 
-  ///
-  final String description;
+//   ///
+//   final String localFilePath;
 
-  ///
-  final String localFilePath;
-
-  @override
-  List<Object?> get props => [
-        userId,
-        title,
-        description,
-        localFilePath,
-      ];
-}
+//   @override
+//   List<Object?> get props => [
+//         title,
+//         description,
+//         localFilePath,
+//       ];
+// }
 
 ///
 class ReceiptsUpdate extends ReceiptsEvent {
   ///
   ReceiptsUpdate({
     required this.id,
-    required this.userId,
     required this.title,
     required this.description,
     this.localFilePath,
   });
-
-  ///
-  final String userId;
 
   ///
   final String id;
@@ -63,7 +54,6 @@ class ReceiptsUpdate extends ReceiptsEvent {
 
   @override
   List<Object?> get props => [
-        userId,
         id,
         title,
         description,
@@ -74,16 +64,13 @@ class ReceiptsUpdate extends ReceiptsEvent {
 ///
 class ReceiptsDelete extends ReceiptsEvent {
   ///
-  ReceiptsDelete(this.userId, this.id);
-
-  ///
-  final String userId;
+  ReceiptsDelete(this.id);
 
   ///
   final String id;
 
   @override
-  List<Object?> get props => [userId, id];
+  List<Object?> get props => [id];
 }
 
 ///

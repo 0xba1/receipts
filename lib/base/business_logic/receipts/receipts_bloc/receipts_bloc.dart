@@ -18,7 +18,6 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     required AuthenticationRepository authenticationRepository,
     required FireDatabase database,
   }) : super(const ReceiptsState()) {
-    on<ReceiptsCreate>(_onReceiptsCreate);
     on<ReceiptsUpdate>(_onReceiptsUpdate);
     on<ReceiptsDelete>(_onReceiptsDelete);
     on<ReceiptsUserChanged>(_onUserChanged);
@@ -26,9 +25,12 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
 
     _fireDatabase = database;
     _userSubscription = authenticationRepository.user.listen(
-      (User user) => add(
-        ReceiptsUserChanged(userId: user.id),
-      ),
+      (User user) {
+        _userId = user.id;
+        add(
+          ReceiptsUserChanged(userId: user.id),
+        );
+      },
     );
     _receiptSubscription = _fireDatabase
         .stream(authenticationRepository.currentUser.id)
@@ -41,6 +43,7 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
   late final FireDatabase _fireDatabase;
   StreamSubscription? _userSubscription;
   StreamSubscription? _receiptSubscription;
+  late String _userId;
 
   void _onUserChanged(ReceiptsUserChanged event, Emitter emit) {
     _receiptSubscription?.cancel();
@@ -58,21 +61,23 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     emit(ReceiptsState(event.receipts));
   }
 
-  void _onReceiptsCreate(ReceiptsCreate event, Emitter emit) {
-    unawaited(
-      _fireDatabase.createReceipt(
-        userId: event.userId,
-        title: event.title,
-        description: event.description,
-        localFilePath: event.localFilePath,
-      ),
+  Future<void> createReceipt({
+    required String title,
+    required String description,
+    required String localFilePath,
+  }) async {
+    await _fireDatabase.createReceipt(
+      userId: _userId,
+      title: title,
+      description: description,
+      localFilePath: localFilePath,
     );
   }
 
   void _onReceiptsUpdate(ReceiptsUpdate event, Emitter emit) {
     unawaited(
       _fireDatabase.updateReceipt(
-        userId: event.userId,
+        userId: _userId,
         id: event.id,
         title: event.title,
         description: event.description,
@@ -84,7 +89,7 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
   void _onReceiptsDelete(ReceiptsDelete event, Emitter emit) {
     unawaited(
       _fireDatabase.deleteReceipt(
-        userId: event.userId,
+        userId: _userId,
         id: event.id,
       ),
     );

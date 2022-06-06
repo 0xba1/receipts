@@ -103,12 +103,25 @@ class FireDatabase extends Database {
   Stream<List<Receipt>> stream(String userId) {
     if (userId == '') return Stream.value([]);
 
-    return FirebaseFirestore.instance.collection(userId).snapshots().asyncMap(
+    return _instance.collection(userId).snapshots().asyncMap(
           (event) =>
               event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
             final data = doc.data();
             return Receipt.fromMap(data);
           }).toList(),
         );
+  }
+
+  /// Current list of [Receipt]s
+  Future<List<Receipt>> receipts(String userId) async {
+    if (userId == '') return [];
+
+    final collection = await _instance.collection(userId).get();
+
+    return collection.docs
+        .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+      final data = doc.data();
+      return Receipt.fromMap(data);
+    }).toList();
   }
 }

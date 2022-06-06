@@ -11,6 +11,7 @@ import 'package:receipts/base/business_logic/auth/auth_bloc/auth_bloc.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
 import 'package:receipts/base/business_logic/database/database.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
+import 'package:receipts/base/business_logic/search/search_cubit.dart';
 import 'package:receipts/firebase_options.dart';
 import 'package:receipts/receipt_theme.dart';
 import 'package:receipts/routes.dart';
@@ -46,6 +47,12 @@ void main() {
             ),
             BlocProvider(
               create: (_) => AdsCubit(adsController),
+            ),
+            BlocProvider(
+              create: (context) {
+                final receiptsBloc = context.read<ReceiptsBloc>();
+                return SearchCubit(receiptsBloc);
+              },
             ),
           ],
           child: const ReceiptsApp(),

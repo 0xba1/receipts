@@ -46,6 +46,7 @@ class FireDatabase extends Database {
     required String description,
     required String localFilePath,
   }) async {
+    final fileType = extractExt(localFilePath);
     final filePath =
         await _storage.uploadFile(userId: userId, localFilePath: localFilePath);
     final id = _uuid.v4();
@@ -55,6 +56,8 @@ class FireDatabase extends Database {
       'title': title,
       'description': description,
       'file_path': filePath,
+      'file_type': fileType,
+      'encrypted': false,
     };
     await _instance.collection(userId).doc(id).set(map);
   }
@@ -124,4 +127,11 @@ class FireDatabase extends Database {
       return Receipt.fromMap(data);
     }).toList();
   }
+}
+
+/// Extracts file extension from string
+String? extractExt(String fileName) {
+  final pattern = RegExp(r'\.(?<ext>[0-9a-zA-Z]+)$');
+  final match = pattern.firstMatch(fileName);
+  return match?.namedGroup('ext');
 }

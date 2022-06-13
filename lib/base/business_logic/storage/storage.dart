@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
 /// Abstract interface of remote storage
@@ -37,9 +36,9 @@ class FireStorage extends Storage {
     required String userId,
     required String localFilePath,
   }) async {
-    if (!await Permission.contacts.request().isGranted) {
-      return null;
-    }
+    // if (!await Permission.storage.request().isGranted) {
+    //   return null;
+    // }
     final id = _uuid.v4();
     final file = File(localFilePath);
 
@@ -47,6 +46,7 @@ class FireStorage extends Storage {
       await _instance.ref('$userId/$id').putFile(file);
       return id;
     } on FirebaseException catch (err) {
+      debugPrint('**************Failed************');
       debugPrint('Failed to upload file: $err');
     }
     return null;
@@ -57,9 +57,9 @@ class FireStorage extends Storage {
     required String userId,
     required String id,
   }) async {
-    if (!await Permission.contacts.request().isGranted) {
-      return null;
-    }
+    // if (!await Permission.storage.request().isGranted) {
+    //   return null;
+    // }
     final appDocDir = await getApplicationDocumentsDirectory();
     final path = '${appDocDir.path}/$userId/$id';
     final downloadToFile = File(path);

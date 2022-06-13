@@ -14,8 +14,8 @@ class Receipt {
   Receipt.fromMap(Map<String, dynamic> map)
       : title = map['title'] as String,
         description = map['description'] as String,
-        fileType = FileTypeHelper.fromStr(map['file-type'] as String),
-        storePath = map['store_path'] as String,
+        fileType = FileTypeHelper.fromStr(map['file_type'] as String?),
+        storePath = map['file_path'] as String,
         id = map['id'] as String,
         userId = map['user_id'] as String;
 
@@ -73,7 +73,7 @@ extension Str on FileType {
 /// Factory for FileType
 class FileTypeHelper {
   ///
-  static FileType fromStr(String str) {
+  static FileType fromStr(String? str) {
     switch (str) {
       case 'jpg':
         return FileType.jpg;

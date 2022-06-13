@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           children: [
             const SearchBar(),
@@ -28,8 +29,8 @@ class Home extends StatelessWidget {
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),
-              ),
-            if (receiptsBloc.state.receipts!.isEmpty)
+              )
+            else if (receiptsBloc.state.receipts!.isEmpty)
               const Expanded(child: Center(child: OhSoEmpty())),
             if (receiptsBloc.state.receipts != null &&
                 receiptsBloc.state.receipts!.isNotEmpty)

@@ -19,6 +19,7 @@ class SearchScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           children: [
             DecoratedBox(
@@ -32,6 +33,7 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
               child: TextField(
+                autofocus: true,
                 decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 8),

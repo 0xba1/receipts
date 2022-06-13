@@ -14,9 +14,6 @@ class OhSoEmpty extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
-          height: 200,
-        ),
         Icon(
           Icons.lightbulb,
           size: 128,

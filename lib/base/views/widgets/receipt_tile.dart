@@ -21,7 +21,7 @@ class ReceiptTile extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
         onTap: () {
-          context.push('e', extra: receipt);
+          context.push('/receipt_details', extra: receipt);
         },
         child: Text(receipt.title),
       ),

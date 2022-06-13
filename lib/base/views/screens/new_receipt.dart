@@ -22,6 +22,7 @@ class NewReceipt extends StatefulWidget {
 class _NewReceiptState extends State<NewReceipt> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
+  String? localFilePath;
 
   @override
   void initState() {
@@ -40,11 +41,12 @@ class _NewReceiptState extends State<NewReceipt> {
   @override
   Widget build(BuildContext context) {
     final receiptsBloc = context.read<ReceiptsBloc>();
-    String? localFilePath;
+
     final width = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: BackButton(
             onPressed: () => context.pop(),
@@ -56,6 +58,7 @@ class _NewReceiptState extends State<NewReceipt> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: Form(
+                key: Keys.receiptFormKey,
                 child: Column(
                   children: [
                     TextFormField(
@@ -122,6 +125,10 @@ class _NewReceiptState extends State<NewReceipt> {
                           );
                           // ignore: use_build_context_synchronously
                           context.go('/');
+                        } else {
+                          debugPrint(
+                            '${Keys.receiptFormKey.currentState!.validate()} ********* $localFilePath',
+                          );
                         }
                       },
                       style: ButtonStyle(
@@ -151,7 +158,7 @@ Future<String?> _pickFilePath() async {
       'pdf',
     ],
   );
-
+  debugPrint('File path: ${result?.files.single.path}');
   return result?.files.single.path;
 }
 
@@ -219,5 +226,6 @@ Future<String?> _getFileFromModal(BuildContext context) async {
       );
     },
   );
+  debugPrint('File from modal: $pathOfChosenFile');
   return pathOfChosenFile;
 }

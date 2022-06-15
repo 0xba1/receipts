@@ -8,6 +8,8 @@ class Receipt {
     required this.storePath,
     required this.id,
     required this.userId,
+    required this.createdAt,
+    required this.lastUpdatedAt,
   });
 
   /// Creates a [Receipt] from [Map<String, dynamic>]
@@ -17,25 +19,33 @@ class Receipt {
         fileType = FileTypeHelper.fromStr(map['file_type'] as String?),
         storePath = map['file_path'] as String,
         id = map['id'] as String,
+        createdAt = map['created_at'] as int,
+        lastUpdatedAt = map['last_updated_at'] as int,
         userId = map['user_id'] as String;
 
   /// Title of the receipt
-  String title;
+  final String title;
+
+  /// Time receipt was created in milliseconds from epoch
+  final int createdAt;
+
+  /// Time receipt was last updated in milliseconds from epoch
+  final int lastUpdatedAt;
 
   /// Description of the receipt
-  String description;
+  final String description;
 
   /// [FileType] of the receipt
-  FileType fileType;
+  final FileType fileType;
 
   /// Storage path
-  String storePath;
+  final String storePath;
 
   /// [Receipt] id
-  String id;
+  final String id;
 
   /// [Receipt] `User` id
-  String userId;
+  final String userId;
 }
 
 /// Enum indicating file type

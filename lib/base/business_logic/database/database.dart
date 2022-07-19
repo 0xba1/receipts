@@ -46,7 +46,7 @@ class FireDatabase extends Database {
     required String description,
     required String localFilePath,
   }) async {
-    final currentTime = DateTime.now().microsecondsSinceEpoch;
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
     final fileType = extractExt(localFilePath);
     final filePath =
         await _storage.uploadFile(userId: userId, localFilePath: localFilePath);
@@ -85,7 +85,7 @@ class FireDatabase extends Database {
     String? description,
     String? localFilePath,
   }) async {
-    final currentTime = DateTime.now().microsecondsSinceEpoch;
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
 
     final Map<String, Object?> map;
     if (localFilePath != null) {

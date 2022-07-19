@@ -5,7 +5,7 @@ class Receipt {
     required this.title,
     required this.description,
     required this.fileType,
-    required this.storePath,
+    required this.filePath,
     required this.id,
     required this.userId,
     required this.createdAt,
@@ -17,7 +17,7 @@ class Receipt {
       : title = map['title'] as String,
         description = map['description'] as String,
         fileType = FileTypeHelper.fromStr(map['file_type'] as String?),
-        storePath = map['file_path'] as String,
+        filePath = map['file_path'] as String,
         id = map['id'] as String,
         createdAt = map['created_at'] as int,
         lastUpdatedAt = map['last_updated_at'] as int,
@@ -39,7 +39,7 @@ class Receipt {
   final FileType fileType;
 
   /// Storage path
-  final String storePath;
+  final String filePath;
 
   /// [Receipt] id
   final String id;

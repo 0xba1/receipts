@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_file/open_file.dart';
@@ -28,6 +26,12 @@ class ReceiptDetails extends StatelessWidget {
           _receipt.title,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.more_vert_rounded),
+            onPressed: () {},
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -37,11 +41,11 @@ class ReceiptDetails extends StatelessWidget {
           Text(_receipt.description),
           InkWell(
             onTap: () async {
-              final filePath = await FireStorage().downloadFile(
-                userId: _receipt.userId,
-                id: _receipt.id,
-              );
-              unawaited(OpenFile.open(filePath));
+              final filePath =
+                  await FireStorage().downloadFile(filePath: _receipt.filePath);
+              if (filePath != null) {
+                await OpenFile.open(filePath);
+              }
             },
             radius: 10,
             child: Container(

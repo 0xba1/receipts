@@ -15,8 +15,7 @@ abstract class Storage {
 
   /// Returns downloaded file path, arg: path of storage to be downloaded from
   Future<String?> downloadFile({
-    required String userId,
-    required String id,
+    required String filePath,
   });
 
   /// Deletes file from remote database
@@ -44,7 +43,7 @@ class FireStorage extends Storage {
 
     try {
       await _instance.ref('$userId/$id').putFile(file);
-      return id;
+      return '$userId/$id';
     } on FirebaseException catch (err) {
       debugPrint('**************Failed************');
       debugPrint('Failed to upload file: $err');
@@ -54,18 +53,17 @@ class FireStorage extends Storage {
 
   @override
   Future<String?> downloadFile({
-    required String userId,
-    required String id,
+    required String filePath,
   }) async {
     // if (!await Permission.storage.request().isGranted) {
     //   return null;
     // }
     final appDocDir = await getApplicationDocumentsDirectory();
-    final path = '${appDocDir.path}/$userId/$id';
-    final downloadToFile = File(path);
+    final path = '${appDocDir.path}/$filePath';
+    final downloadToFile = await File(path).create(recursive: true);
 
     try {
-      await _instance.ref('$userId/$id').writeToFile(downloadToFile);
+      await _instance.ref(filePath).writeToFile(downloadToFile);
       return path;
     } on FirebaseException catch (err) {
       debugPrint('Failed to download file: $err');

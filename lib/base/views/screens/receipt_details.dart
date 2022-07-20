@@ -27,10 +27,55 @@ class ReceiptDetails extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
-          IconButton(
+          PopupMenuButton(
             icon: const Icon(Icons.more_vert_rounded),
-            onPressed: () {},
-          )
+            itemBuilder: (_) {
+              return [
+                PopupMenuItem<void>(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.edit_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        'Edit',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      )
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+                PopupMenuItem<void>(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.delete_rounded,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        'Delete',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      )
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+              ];
+            },
+          ),
         ],
       ),
       body: Column(
@@ -73,4 +118,9 @@ class ReceiptDetails extends StatelessWidget {
       ),
     );
   }
+}
+
+enum _PopupOptions {
+  edit,
+  delete,
 }

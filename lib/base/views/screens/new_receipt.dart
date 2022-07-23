@@ -86,7 +86,7 @@ class _NewReceiptState extends State<NewReceipt> {
                       controller: descriptionController,
                       keyboardType: TextInputType.multiline,
                       maxLines: 6,
-                      minLines: 6,
+                      minLines: 1,
                       textAlignVertical: TextAlignVertical.top,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.descriptionR,

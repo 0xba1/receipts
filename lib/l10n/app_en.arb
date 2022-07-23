@@ -40,6 +40,10 @@
     "@descriptionR": {
         "description": "Description"
     },
+    "previewR": "Preview",
+    "@previewR": {
+        "description": "Preview of the receipt"
+    },
     "dontHaveAccount": "Don't have account? Create new account",
     "@dontHaveAccount": {
         "description": "This is meant to be the text of the button that takes the user to the signup page from the login screen if they don't have an account."
@@ -51,6 +55,15 @@
     "enterValidEmail": "Please enter a valid email address",
     "@enterValidEmail": {
         "description": "Email validation: Email invalid."
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "Edit receipt"
+    },
+
+    "delete": "Delete",
+    "@delete": {
+        "description": "Delete receipt"
     },
     "enterValidText": "Please enter a valid text",
     "@enterValidText": {

@@ -32,12 +32,14 @@ class ReceiptTile extends StatelessWidget {
           leading: CircleAvatar(
             backgroundColor: Theme.of(context).primaryColor.withOpacity(0.3),
             child: Icon(
-              Icons.picture_as_pdf_rounded,
+              receipt.fileType == FileType.pdf
+                  ? Icons.picture_as_pdf_rounded
+                  : Icons.image,
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           subtitle: Text(
-            '${DateTime.fromMillisecondsSinceEpoch(receipt.lastUpdatedAt)}',
+            _beautifyDate(receipt.lastUpdatedAt),
           ),
           trailing: CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -49,4 +51,13 @@ class ReceiptTile extends StatelessWidget {
       ),
     );
   }
+}
+
+String _beautifyDate(int millisecondsSinceEpoch) {
+  final date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+  if (DateTime.now().year == date.year) {
+    return '${date.hour}:${date.minute}    ${date.day}/${date.month}';
+  }
+
+  return '${date.hour}:${date.minute}    ${date.day}/${date.month}/${date.year}';
 }

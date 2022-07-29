@@ -40,6 +40,11 @@ class AuthenticationRepository {
     });
   }
 
+  /// Delete current user
+  Future<void> deleteUser() async {
+    await _firebaseAuth.currentUser?.delete();
+  }
+
   /// Returns the current cached user
   /// Defaults to [User.empty] if there is no cached user.
   User get currentUser {

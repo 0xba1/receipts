@@ -15,6 +15,9 @@ class AuthLogOutRequested extends AuthEvent {}
 /// When user attempts to log in with google
 class AuthLogInWithGoogle extends AuthEvent {}
 
+/// When user attempts to delete their account
+class AuthDeleteAccount extends AuthEvent {}
+
 /// When user attempts to log in with email and password
 class AuthLogInWithEmail extends AuthEvent {
   /// When user attempts to log in with email and password

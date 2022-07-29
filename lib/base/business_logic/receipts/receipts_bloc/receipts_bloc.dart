@@ -27,6 +27,7 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     _userSubscription = authenticationRepository.user.listen(
       (User user) {
         _userId = user.id;
+
         add(
           ReceiptsUserChanged(userId: user.id),
         );

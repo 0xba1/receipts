@@ -31,7 +31,9 @@ class SearchBar extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
                   customBorder: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(10),

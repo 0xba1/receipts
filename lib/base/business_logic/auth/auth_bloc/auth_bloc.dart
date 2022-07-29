@@ -26,6 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLogInWithGoogle>(_onLogInWithGoogle);
     on<AuthLogInWithEmail>(_onLogInWithEmail);
     on<AuthSignUpWithEmail>(_onSignUpWithEmail);
+    on<AuthDeleteAccount>(_onAccountDelete);
 
     _userSubscription = _authenticationRepository.user.listen(
       (User user) => add(
@@ -46,6 +47,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ? AuthState.authenticated(event.user)
           : const AuthState.unauthenticated(),
     );
+  }
+
+  void _onAccountDelete(AuthDeleteAccount event, Emitter<AuthState> emit) {
+    unawaited(_authenticationRepository.deleteUser());
   }
 
   void _onLogOutRequested(AuthLogOutRequested event, Emitter<AuthState> emit) {

@@ -11,6 +11,7 @@ import 'package:printing/printing.dart';
 import 'package:receipts/base/business_logic/database/models/model.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/base/business_logic/storage/storage.dart';
+import 'package:receipts/base/views/widgets/confirm_dialog.dart';
 
 /// {@template details}
 /// Screen showing the details of a receipt also option to open the receipt
@@ -97,27 +98,39 @@ class _ReceiptDetailsState extends State<ReceiptDetails> {
                   );
                   break;
                 case _PopupOption.delete:
-                  unawaited(
-                    showDialog<void>(
-                      context: context,
-                      builder: (_) {
-                        return const SizedBox.expand(
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                  await showDialog<void>(
+                    context: context,
+                    builder: (_) => ConfirmDialog(
+                      confirm: () async {
+                        context
+                            .read<ReceiptsBloc>()
+                            .add(ReceiptsDelete(widget._receipt.id));
+
+                        unawaited(
+                          showDialog<void>(
+                            context: context,
+                            builder: (_) {
+                              return const SizedBox.expand(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            },
                           ),
                         );
+
+                        await Future<void>.delayed(
+                          const Duration(milliseconds: 500),
+                        );
+
+                        if (mounted) {
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                        }
                       },
+                      title: 'Delete receipt?',
+                      details: 'This receipt will be permanently deleted',
                     ),
                   );
-                  final receiptsBloc = context.read<ReceiptsBloc>();
-
-                  receiptsBloc.add(ReceiptsDelete(widget._receipt.id));
-
-                  await Future<void>.delayed(const Duration(milliseconds: 500));
-
-                  if (mounted) {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                  }
 
                   break;
               }
@@ -359,6 +372,7 @@ class __EditDialogState extends State<_EditDialog> {
                       padding: const EdgeInsets.all(8),
                       child: TextButton(
                         onPressed: () {
+                          // TODO:
                           final title = titleController.text;
                           final description = descriptionController.text;
                         },

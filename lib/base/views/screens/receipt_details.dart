@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:open_file/open_file.dart';
 import 'package:printing/printing.dart';
 import 'package:receipts/base/business_logic/database/models/model.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/base/business_logic/storage/storage.dart';
 import 'package:receipts/base/views/widgets/confirm_dialog.dart';
+import 'package:receipts/base/views/widgets/edit_dialog.dart';
+import 'package:receipts/base/views/widgets/image_preview.dart';
 
 /// {@template details}
 /// Screen showing the details of a receipt also option to open the receipt
@@ -89,9 +90,10 @@ class _ReceiptDetailsState extends State<ReceiptDetails> {
                     context: context,
                     builder: (_) {
                       return Dialog(
-                        child: _EditDialog(
+                        child: EditDialog(
                           title: widget._receipt.title,
                           description: widget._receipt.description,
+                          id: widget._receipt.id,
                         ),
                       );
                     },
@@ -224,171 +226,9 @@ class _ReceiptDetailsState extends State<ReceiptDetails> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32),
-              child: _ImagePreview(path: path, image: image),
+              child: ImagePreview(path: path, image: image),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ImagePreview extends StatelessWidget {
-  const _ImagePreview({Key? key, required this.path, required this.image})
-      : super(key: key);
-
-  final String? path;
-  final ui.Image? image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minWidth: double.infinity,
-            minHeight: 200,
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            child: Opacity(
-              opacity: 0.8,
-              child: image == null
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : RawImage(
-                      image: image,
-                      fit: BoxFit.fitWidth,
-                    ),
-            ),
-            onTap: () {
-              if (path != null) {
-                OpenFile.open(path);
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _EditDialog extends StatefulWidget {
-  const _EditDialog({
-    Key? key,
-    required this.title,
-    required this.description,
-  }) : super(key: key);
-  final String title;
-  final String description;
-
-  @override
-  State<_EditDialog> createState() => __EditDialogState();
-}
-
-class __EditDialogState extends State<_EditDialog> {
-  @override
-  void initState() {
-    super.initState();
-    titleController = TextEditingController();
-    titleController.text = widget.title;
-    descriptionController = TextEditingController();
-    descriptionController.text = widget.description;
-  }
-
-  bool isLoading = false;
-  late TextEditingController titleController;
-  late TextEditingController descriptionController;
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minWidth: 280,
-        maxWidth: 560,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: ColoredBox(
-          color: Theme.of(context).colorScheme.surface,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Edit Receipt',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.titleR,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextField(
-                  controller: descriptionController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 6,
-                  minLines: 1,
-                  textAlignVertical: TextAlignVertical.top,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.descriptionR,
-                  ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: TextButton(
-                        onPressed: () {
-                          // TODO:
-                          final title = titleController.text;
-                          final description = descriptionController.text;
-                        },
-                        child: Text(
-                          'Confirm',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
         ),
       ),
     );

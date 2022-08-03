@@ -62,6 +62,7 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     emit(ReceiptsState(event.receipts));
   }
 
+  /// Create new receipt given title, description and file path of receipt
   Future<void> createReceipt({
     required String title,
     required String description,

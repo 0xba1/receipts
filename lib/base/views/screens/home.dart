@@ -24,57 +24,63 @@ class Home extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        drawer: Column(
-          children: [
-            TextButton.icon(
-              onPressed: () {
-                showDialog<void>(
-                  context: context,
-                  builder: (_) => ConfirmDialog(
-                    confirm: () {
-                      authBloc.add(AuthLogOutRequested());
-                    },
-                    title: 'Log out?',
-                    details: 'You will be logged out of this device!',
+        drawer: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, top: 64),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (_) => ConfirmDialog(
+                        confirm: () {
+                          authBloc.add(AuthLogOutRequested());
+                        },
+                        title: 'Log out?',
+                        details: 'You will be logged out of this device!',
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.logout_rounded,
+                    color: Theme.of(context).colorScheme.error,
                   ),
-                );
-              },
-              icon: Icon(
-                Icons.logout_rounded,
-                color: Theme.of(context).colorScheme.error,
-              ),
-              label: Text(
-                'Log out',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-              ),
-            ),
-            TextButton.icon(
-              onPressed: () {
-                showDialog<void>(
-                  context: context,
-                  builder: (_) => ConfirmDialog(
-                    confirm: () {
-                      authBloc.add(AuthDeleteAccount());
-                    },
-                    title: 'Delete Account?',
-                    details: 'You account will be permanently deleted!',
+                  label: Text(
+                    'Log out',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
-                );
-              },
-              icon: Icon(
-                Icons.delete_rounded,
-                color: Theme.of(context).colorScheme.error,
-              ),
-              label: Text(
-                'Delete Account',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
                 ),
-              ),
+                TextButton.icon(
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (_) => ConfirmDialog(
+                        confirm: () {
+                          authBloc.add(AuthDeleteAccount());
+                        },
+                        title: 'Delete Account?',
+                        details: 'You account will be permanently deleted!',
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.delete_rounded,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  label: Text(
+                    'Delete Account',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
         body: Column(
           children: [
@@ -90,15 +96,12 @@ class Home extends StatelessWidget {
             if (receiptsBloc.state.receipts != null &&
                 receiptsBloc.state.receipts!.isNotEmpty)
               Expanded(
-                child: ListView.separated(
+                child: ListView.builder(
                   itemBuilder: (context, index) {
                     return ReceiptTile(
                       receipt: receiptsBloc.state.receipts![index],
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(
-                    height: 16,
-                  ),
                   itemCount: receiptsBloc.state.receipts!.length,
                 ),
               ),

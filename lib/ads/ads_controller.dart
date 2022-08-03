@@ -49,7 +49,7 @@ class AdsController {
   }
 
   /// Interstitial ads ID
-  static String get interstitialId => _testInterstitialId;
+  static String get interstitialId => _productionInterstitialId;
 
   /// Production Interstial ads ID
   // ignore: unused_element

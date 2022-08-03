@@ -1,9 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:receipts/ads/ads_cubit.dart';
 import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 import 'package:receipts/keys.dart';
 import 'package:receipts/validator.dart';
@@ -26,6 +29,7 @@ class _NewReceiptState extends State<NewReceipt> {
 
   @override
   void initState() {
+    context.read<AdsCubit>().state.preloadAd();
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     super.initState();
@@ -41,6 +45,7 @@ class _NewReceiptState extends State<NewReceipt> {
   @override
   Widget build(BuildContext context) {
     final receiptsBloc = context.read<ReceiptsBloc>();
+    final adsController = context.read<AdsCubit>().state;
 
     final width = MediaQuery.of(context).size.width;
 
@@ -123,8 +128,12 @@ class _NewReceiptState extends State<NewReceipt> {
                             description: descriptionController.text,
                             localFilePath: localFilePath!,
                           );
-                          // ignore: use_build_context_synchronously
-                          context.go('/');
+                          final ad =
+                              await adsController.takePreloadedAd()?.ready;
+
+                          await ad?.show();
+
+                          if (mounted) context.go('/');
                         } else {
                           debugPrint(
                             '${Keys.receiptFormKey.currentState!.validate()} ********* $localFilePath',

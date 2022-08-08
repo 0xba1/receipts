@@ -16,7 +16,13 @@ class AuthLogOutRequested extends AuthEvent {}
 class AuthLogInWithGoogle extends AuthEvent {}
 
 /// When user attempts to delete their account
-class AuthDeleteAccount extends AuthEvent {}
+class AuthDeleteAccount extends AuthEvent {
+  /// When user attempts to delete their account
+  const AuthDeleteAccount(this.receiptsBloc);
+
+  /// [ReceiptsBloc], to delete all receipts
+  final ReceiptsBloc receiptsBloc;
+}
 
 /// When user attempts to log in with email and password
 class AuthLogInWithEmail extends AuthEvent {

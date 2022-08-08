@@ -59,7 +59,7 @@ class _EditDialogState extends State<EditDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Edit Receipt',
+                  AppLocalizations.of(context)!.editR,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -99,7 +99,7 @@ class _EditDialogState extends State<EditDialog> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Cancel',
+                          AppLocalizations.of(context)!.cancel,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           ),
@@ -122,7 +122,7 @@ class _EditDialogState extends State<EditDialog> {
                           context.pop();
                         },
                         child: Text(
-                          'Confirm',
+                          AppLocalizations.of(context)!.confirm,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                           ),

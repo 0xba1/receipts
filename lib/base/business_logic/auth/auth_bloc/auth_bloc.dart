@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:receipts/base/business_logic/auth/auth_repo.dart';
 import 'package:receipts/base/business_logic/auth/models/model.dart';
+import 'package:receipts/base/business_logic/receipts/receipts_bloc/receipts_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -49,8 +50,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  void _onAccountDelete(AuthDeleteAccount event, Emitter<AuthState> emit) {
-    unawaited(_authenticationRepository.deleteUser());
+  Future<void> _onAccountDelete(
+    AuthDeleteAccount event,
+    Emitter<AuthState> emit,
+  ) async {
+    await event.receiptsBloc.deleteAllReceipts();
+    await _authenticationRepository.deleteUser();
   }
 
   void _onLogOutRequested(AuthLogOutRequested event, Emitter<AuthState> emit) {

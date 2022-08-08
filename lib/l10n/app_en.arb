@@ -44,7 +44,7 @@
     "@previewR": {
         "description": "Preview of the receipt"
     },
-    "dontHaveAccount": "Don't have account? Create new account",
+    "dontHaveAccount": "Don't have an account? Create new account",
     "@dontHaveAccount": {
         "description": "This is meant to be the text of the button that takes the user to the signup page from the login screen if they don't have an account."
     },
@@ -60,11 +60,48 @@
     "@edit": {
         "description": "Edit receipt"
     },
+    "editR": "Edit Receipt",
+    "@editR": {
+        "description": "'Edit Receipt'"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel a dialog"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "description": "Confirm a dialog"
+    },
 
     "delete": "Delete",
     "@delete": {
         "description": "Delete receipt"
     },
+    "deleteR": "Delete Receipt?",
+    "@deleteR": {
+        "description": "'Delete Receipt?' dialog header"
+    },
+    "deleteD": "This receipt will be permanently deleted!",
+    "@deleteD": {
+        "description": "'This receipt will be permanently deleted!'"
+    },
+    "deleteA": "Delete Account",
+    "@deleteA": {
+        "description": "'Delete Account' dialog header"
+    },
+    "deleteAD": "You account will be permanently deleted!",
+    "@deleteAD": {
+        "description": "'You account will be permanently deleted!'"
+    },
+    "logout": "Log out",
+    "@logout": {
+        "description": "'Log out' "
+    },
+    "logoutD": "You will be logged out of this device!",
+    "@logoutD": {
+        "description": "'You will be logged out of this device!'"
+    },
+    
     "enterValidText": "Please enter a valid text",
     "@enterValidText": {
         "description": "Form validation: String invalid."

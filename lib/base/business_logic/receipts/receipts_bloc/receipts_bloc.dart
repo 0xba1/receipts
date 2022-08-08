@@ -97,6 +97,13 @@ class ReceiptsBloc extends Bloc<ReceiptsEvent, ReceiptsState> {
     );
   }
 
+  /// Delete all receipts
+  Future<void> deleteAllReceipts() async {
+    for (final receipt in state.receipts ?? <Receipt>[]) {
+      await _fireDatabase.deleteReceipt(id: receipt.id, userId: _userId);
+    }
+  }
+
   @override
   Future<void> close() {
     _userSubscription?.cancel();

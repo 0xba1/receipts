@@ -12,19 +12,20 @@ class SearchCubit extends Cubit<SearchState> {
   /// {@macro search_cubit}
   SearchCubit(ReceiptsBloc receiptsBloc)
       : _receiptsBloc = receiptsBloc,
-        super(const SearchState([]));
+        super(SearchState(receiptsBloc.state.receipts ?? []));
 
   final ReceiptsBloc _receiptsBloc;
 
   /// Searches the database for query string
   void search(String query) {
     final receipts = _receiptsBloc.state.receipts
-        ?.where(
-          (Receipt receipt) =>
-              receipt.title.contains(query) ||
-              receipt.description.contains(query),
-        )
-        .toList();
+            ?.where(
+              (Receipt receipt) =>
+                  receipt.title.contains(query) ||
+                  receipt.description.contains(query),
+            )
+            .toList() ??
+        [];
 
     emit(SearchState(receipts));
   }

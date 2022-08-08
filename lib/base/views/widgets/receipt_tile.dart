@@ -56,8 +56,8 @@ class ReceiptTile extends StatelessWidget {
 String _beautifyDate(int millisecondsSinceEpoch) {
   final date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
   if (DateTime.now().year == date.year) {
-    return '${date.hour}:${date.minute}    ${date.day}/${date.month}';
+    return '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}    ${date.day}/${date.month}';
   }
 
-  return '${date.hour}:${date.minute}    ${date.day}/${date.month}/${date.year}';
+  return '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}    ${date.day}/${date.month}/${date.year}';
 }

@@ -51,27 +51,20 @@ class SearchScreen extends StatelessWidget {
                 onChanged: searchCubit.search,
               ),
             ),
-            if (searchCubit.state.receipts == null)
-              const Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            if (searchCubit.state.receipts!.isEmpty)
+            if (searchCubit.state.receipts.isEmpty)
               const Expanded(child: Center(child: OhSoEmpty())),
-            if (searchCubit.state.receipts != null &&
-                searchCubit.state.receipts!.isNotEmpty)
+            if (searchCubit.state.receipts.isNotEmpty)
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) {
                     return ReceiptTile(
-                      receipt: searchCubit.state.receipts![index],
+                      receipt: searchCubit.state.receipts[index],
                     );
                   },
                   separatorBuilder: (_, __) => const SizedBox(
                     height: 16,
                   ),
-                  itemCount: searchCubit.state.receipts!.length,
+                  itemCount: searchCubit.state.receipts.length,
                 ),
               ),
           ],

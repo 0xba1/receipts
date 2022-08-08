@@ -38,8 +38,8 @@ class Home extends StatelessWidget {
                         confirm: () {
                           authBloc.add(AuthLogOutRequested());
                         },
-                        title: 'Log out?',
-                        details: 'You will be logged out of this device!',
+                        title: '${AppLocalizations.of(context)!.logout}?',
+                        details: AppLocalizations.of(context)!.logoutD,
                       ),
                     );
                   },
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
                     color: Theme.of(context).colorScheme.error,
                   ),
                   label: Text(
-                    'Log out',
+                    AppLocalizations.of(context)!.logout,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.error,
                     ),
@@ -60,10 +60,12 @@ class Home extends StatelessWidget {
                       context: context,
                       builder: (_) => ConfirmDialog(
                         confirm: () {
-                          authBloc.add(AuthDeleteAccount());
+                          authBloc.add(
+                            AuthDeleteAccount(context.read<ReceiptsBloc>()),
+                          );
                         },
-                        title: 'Delete Account?',
-                        details: 'You account will be permanently deleted!',
+                        title: '${AppLocalizations.of(context)!.deleteA}?',
+                        details: AppLocalizations.of(context)!.deleteAD,
                       ),
                     );
                   },
@@ -72,7 +74,7 @@ class Home extends StatelessWidget {
                     color: Theme.of(context).colorScheme.error,
                   ),
                   label: Text(
-                    'Delete Account',
+                    AppLocalizations.of(context)!.deleteA,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.error,
                     ),

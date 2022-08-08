@@ -5,11 +5,11 @@ part of 'search_cubit.dart';
 /// {@end_template}
 class SearchState extends Equatable {
   /// {@macro search_state}
-  const SearchState([this.receipts]);
+  const SearchState(this.receipts);
 
   /// Receipts from database, null if loading
-  final List<Receipt>? receipts;
+  final List<Receipt> receipts;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [receipts];
 }

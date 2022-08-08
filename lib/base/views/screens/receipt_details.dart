@@ -129,8 +129,8 @@ class _ReceiptDetailsState extends State<ReceiptDetails> {
                           Navigator.popUntil(context, (route) => route.isFirst);
                         }
                       },
-                      title: 'Delete receipt?',
-                      details: 'This receipt will be permanently deleted',
+                      title: AppLocalizations.of(context)!.deleteR,
+                      details: AppLocalizations.of(context)!.deleteD,
                     ),
                   );
 

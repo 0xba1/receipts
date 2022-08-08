@@ -1,6 +1,6 @@
 # Receipts
 
-Can't seem to find your receipts when you need them? With `Receipts` you can use them on the go on any device.
+Always losing your receipts, can't seem to find them when you need them? With `Receipts`, save your receipts and access them on the go, on any device!
 
 - Available in English, French, Spanish and Chinese (Using Flutter Localization)
 

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 import 'package:receipts/base/business_logic/auth/auth_cache.dart';
 import 'package:receipts/base/business_logic/auth/auth_exceptions.dart';
 import 'package:receipts/base/business_logic/auth/models/model.dart';
@@ -102,6 +102,7 @@ class AuthenticationRepository {
         password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
+      debugPrint('$e');
       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
       throw const LogInWithEmailAndPasswordFailure();

@@ -77,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onSignUpWithEmail(AuthSignUpWithEmail event, Emitter<AuthState> emit) {
     unawaited(
-      _authenticationRepository.logInWithEmailAndPassword(
+      _authenticationRepository.signUp(
         email: event.email,
         password: event.password,
       ),

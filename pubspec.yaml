@@ -1,6 +1,6 @@
 name: receipts
 description: Keep all your receipts in one place
-version: 0.1.0+3
+version: 0.2.0+4
 publish_to: none
 
 environment:
